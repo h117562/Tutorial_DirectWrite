@@ -13,5 +13,83 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="DirectX">
+      <UniqueIdentifier>{fd3bcbd4-3f0f-4436-9ba4-68699dd48474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{bc096341-4c6d-4cdc-8224-6559ccbe5be7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{e86c4903-70f1-4ff8-bafc-4613e5cd04eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX\TextClass">
+      <UniqueIdentifier>{385b0337-782e-4bb4-a485-3a8a1fb05396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX\ShaderClass">
+      <UniqueIdentifier>{db1c3298-7b7a-4657-a227-b66eef9296cd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SystemClass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorShaderClass.h">
+      <Filter>DirectX\ShaderClass</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DClass.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="ApplicationClass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraClass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelClass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TextClass.h">
+      <Filter>DirectX\TextClass</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoUiClass.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SystemClass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ApplicationClass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraClass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelClass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorShaderClass.cpp">
+      <Filter>DirectX\ShaderClass</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DClass.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="TextClass.cpp">
+      <Filter>DirectX\TextClass</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoUiClass.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="ColorVs.hlsl">
+      <Filter>DirectX\ShaderClass</Filter>
+    </FxCompile>
+    <FxCompile Include="ColorPs.hlsl">
+      <Filter>DirectX\ShaderClass</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

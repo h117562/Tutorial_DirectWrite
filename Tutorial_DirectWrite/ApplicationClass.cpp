@@ -4,9 +4,10 @@ ApplicationClass::ApplicationClass()
 {
 	m_Direct3D = 0;
 	m_ColorShader = 0;
-	m_Camera = 0;
-	m_Model = 0;
-
+	m_CameraClass = 0;
+	m_ModelClass = 0;
+	m_InfoUi = 0;
+	m_TextClass = 0;
 }
 
 ApplicationClass::~ApplicationClass()
@@ -44,38 +45,83 @@ bool ApplicationClass::Initialize(HINSTANCE hinstance, HWND hwnd, bool vsyncEnab
 		return false;
 	}
 
-	m_Model = new ModelClass;
-	if (!m_Model)
+	m_TextClass = new TextClass;
+	if (!m_TextClass)
 	{
 		return false;
 	}
 
-	result = m_Model->Initialize(m_Direct3D->GetDevice());
+	result = m_TextClass->Initialize(m_Direct3D);
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the TextClass.", L"Error", MB_OK);
+		return false;
+	}
+
+	m_InfoUi = new InfoUiClass;
+	if (!m_InfoUi)
+	{
+		return false;
+	}
+
+	result = m_InfoUi->Initialize();
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the InfoUiClass.", L"Error", MB_OK);
+		return false;
+	}
+
+	m_ModelClass = new ModelClass;
+	if (!m_ModelClass)
+	{
+		return false;
+	}
+
+	result = m_ModelClass->Initialize(m_Direct3D->GetDevice());
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the Triangle.", L"Error", MB_OK);
 		return false;
 	}
 
-	m_Camera = new CameraClass;
-	if (!m_Camera)
+	m_CameraClass = new CameraClass;
+	if (!m_CameraClass)
 	{
 		return false;
 	}
 
-	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
+	m_CameraClass->SetPosition(0.0f, 0.0f, -10.0f);
 
 	return result;
 }
 
 void ApplicationClass::Shutdown()
 {
-
-	if (m_Model)
+	if (m_InfoUi)
 	{
-		m_Model->Shutdown();
-		delete m_Model;
-		m_Model = 0;
+		m_InfoUi->Shutdown();
+		delete m_InfoUi;
+		m_InfoUi = 0;
+	}
+
+	if (m_TextClass)
+	{
+		m_TextClass->Shutdown();
+		delete m_TextClass;
+		m_TextClass = 0;
+	}
+
+	if (m_CameraClass)
+	{
+		delete m_CameraClass;
+		m_CameraClass = 0;
+	}
+
+	if (m_ModelClass)
+	{
+		m_ModelClass->Shutdown();
+		delete m_ModelClass;
+		m_ModelClass = 0;
 	}
 
 	if (m_ColorShader)
@@ -98,21 +144,23 @@ bool ApplicationClass::Frame()
 	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
 	bool result;
 
-	m_Camera->Render();
+	m_CameraClass->Render();
 	m_Direct3D->GetWorldMatrix(worldMatrix);
-	m_Camera->GetViewMatrix(viewMatrix);
+	m_CameraClass->GetViewMatrix(viewMatrix);
 	m_Direct3D->GetProjectionMatrix(projectionMatrix);
 	m_Direct3D->GetOrthoMatrix(orthoMatrix);
 
 	//백 버퍼 초기화
-	m_Direct3D->BeginScene(0.0f, 0.0f, 0.2f, 1.0f);
+	m_Direct3D->BeginScene(0.7f, 1.0f, 1.0f, 1.0f);
 
-	m_Model->Render(m_Direct3D->GetDeviceContext());
-	result = m_ColorShader->Render(m_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+	m_ModelClass->Render(m_Direct3D->GetDeviceContext());
+	result = m_ColorShader->Render(m_Direct3D->GetDeviceContext(), m_ModelClass->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 	if (!result)
 	{
 		return false;
 	}
+
+	m_InfoUi->Frame(m_TextClass);
 
 	m_Direct3D->EndScene();
 

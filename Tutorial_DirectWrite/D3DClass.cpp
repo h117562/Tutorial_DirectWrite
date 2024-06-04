@@ -52,12 +52,11 @@ bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDe
 	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
 	D3D11_BLEND_DESC blendStateDescription;
 	ID3D11Device* pDevice = 0;
-	IDXGIFactory* m_DXGIFactory;
-	IDXGIDevice* m_DXGIDevice;
-	IDXGIAdapter* m_Adapter;
 
-	//스크린 정보 저장
+	//VSync 여부 
 	m_vsync_enabled = vsync;
+
+	//새로고침 빈도
 	numerator = 60;		//분자
 	denominator = 1;	//분모
 
@@ -192,24 +191,8 @@ bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDe
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
 	//Direct Device 생성
-	result = D3D11CreateDevice(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_BGRA_SUPPORT, &featureLevel, 1,
-		D3D11_SDK_VERSION, &pDevice, NULL, &m_deviceContext);
-	if (FAILED(result))
-	{
-		return false;
-	}
-
-	result = pDevice->QueryInterface(&m_device);
-	if (FAILED(result)){return false;}
-	result = pDevice->QueryInterface(&m_DXGIDevice);
-	if (FAILED(result)) { return false; }
-	result = m_DXGIDevice->GetAdapter(&m_Adapter);
-	if (FAILED(result)) { return false; }
-	result = m_Adapter->GetParent(IID_PPV_ARGS(&m_DXGIFactory));
-	if (FAILED(result)) { return false; }
-
-	//스왑 체인 생성
-	result = m_DXGIFactory->CreateSwapChain(m_device, &swapChainDesc, &m_swapChain);
+	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_BGRA_SUPPORT, &featureLevel, 1,
+		D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device, NULL, &m_deviceContext);
 	if (FAILED(result))
 	{
 		return false;
