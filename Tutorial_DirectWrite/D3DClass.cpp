@@ -393,7 +393,7 @@ bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDe
 	ZeroMemory(&blendStateDescription, sizeof(D3D11_BLEND_DESC));
 
 	//블랜드 상태 설정(알파 블랜딩)
-	blendStateDescription.AlphaToCoverageEnable = FALSE;
+	blendStateDescription.AlphaToCoverageEnable = false;
 	blendStateDescription.IndependentBlendEnable = false;
 	blendStateDescription.RenderTarget[0].BlendEnable = true;
 	blendStateDescription.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;

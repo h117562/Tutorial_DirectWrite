@@ -6,7 +6,6 @@
 
 #include <dwrite.h>
 #include <d2d1.h>
-#include <string>
 #include "d3dclass.h"
 
 using namespace std;

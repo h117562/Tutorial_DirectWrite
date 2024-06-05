@@ -55,7 +55,7 @@ bool ColorShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount
 }
 
 
-bool ColorShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename, WCHAR* psFilename)
+bool ColorShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, CONST WCHAR* vsFilename, CONST WCHAR* psFilename)
 {
 	HRESULT result;
 	ID3DBlob* errorMessage;

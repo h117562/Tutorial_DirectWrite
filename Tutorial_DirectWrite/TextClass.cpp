@@ -14,14 +14,14 @@ TextClass::~TextClass()
 
 }
 
-bool TextClass::Initialize(D3DClass* m_d3dclass)
+bool TextClass::Initialize(D3DClass* d3dClass)
 {
 	HRESULT result;
 	IDXGISurface* backBuffer;
 	D2D1_RENDER_TARGET_PROPERTIES props;
 
 	//D3D의 스왑체인 버퍼를 가져옴
-	result = m_d3dclass->GetSwapChain()->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
+	result = d3dClass->GetSwapChain()->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
 	if (FAILED(result))
 	{
 		return false;
@@ -80,7 +80,7 @@ bool TextClass::Initialize(D3DClass* m_d3dclass)
 		DWRITE_FONT_WEIGHT::DWRITE_FONT_WEIGHT_NORMAL,//폰트 두께
 		DWRITE_FONT_STYLE::DWRITE_FONT_STYLE_NORMAL,//폰트 스타일
 		DWRITE_FONT_STRETCH::DWRITE_FONT_STRETCH_NORMAL,//폰트 스트레치
-		45.0f,					//폰트 사이즈
+		30.0f,					//폰트 사이즈
 		L"ko",					//지역 이름 ex) KO, EN
 		&m_defaultFormat				//텍스트 형식(IDWriteTextFormat)에 대한 포인터 주소를 반환한다
 	);

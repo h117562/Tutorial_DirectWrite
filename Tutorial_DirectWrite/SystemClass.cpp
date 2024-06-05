@@ -83,6 +83,14 @@ bool SystemClass::Initialize()
 
 void SystemClass::Shutdown()
 {
+
+	if (m_applicationClass)
+	{
+		m_applicationClass->Shutdown();
+		delete m_applicationClass;
+		m_applicationClass = 0;
+	}
+
 	//윈도우 관련 자원반환
 	ShutdownWindows();
 

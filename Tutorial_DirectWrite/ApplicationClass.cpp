@@ -64,7 +64,7 @@ bool ApplicationClass::Initialize(HINSTANCE hinstance, HWND hwnd, bool vsyncEnab
 		return false;
 	}
 
-	result = m_InfoUi->Initialize();
+	result = m_InfoUi->Initialize(m_Direct3D);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the InfoUiClass.", L"Error", MB_OK);
@@ -151,7 +151,7 @@ bool ApplicationClass::Frame()
 	m_Direct3D->GetOrthoMatrix(orthoMatrix);
 
 	//백 버퍼 초기화
-	m_Direct3D->BeginScene(0.7f, 1.0f, 1.0f, 1.0f);
+	m_Direct3D->BeginScene(0.0f, 0.0f, 0.2f, 1.0f);
 
 	m_ModelClass->Render(m_Direct3D->GetDeviceContext());
 	result = m_ColorShader->Render(m_Direct3D->GetDeviceContext(), m_ModelClass->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
