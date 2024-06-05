@@ -51,7 +51,7 @@ bool SystemClass::Initialize()
 	//윈도우 클래스 등록
 	RegisterClassEx(&wc);
 
-	//스크린크기 고정
+	//스크린크기
 	screenwidth = 1200;
 	screenheight = 800;
 
@@ -75,7 +75,7 @@ bool SystemClass::Initialize()
 		result = false;
 	}
 
-	result = m_applicationClass->Initialize(m_hinstance, m_hwnd, VSYNC_ENABLED, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR, screenwidth, screenheight);
+	result = m_applicationClass->Initialize(m_hinstance, m_hwnd, VSYNC_ENABLED, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
 
 	return result;
 }

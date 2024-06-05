@@ -15,7 +15,7 @@ ApplicationClass::~ApplicationClass()
 
 }
 
-bool ApplicationClass::Initialize(HINSTANCE hinstance, HWND hwnd, bool vsyncEnabled, bool fullScreen, float screenDepth, float screenNear, float screenWidth, float screenHeight)
+bool ApplicationClass::Initialize(HINSTANCE hinstance, HWND hwnd, bool vsyncEnabled, bool fullScreen, float screenDepth, float screenNear)
 {
 	bool result;
 
@@ -25,7 +25,7 @@ bool ApplicationClass::Initialize(HINSTANCE hinstance, HWND hwnd, bool vsyncEnab
 		return false;
 	}
 
-	result = m_Direct3D->Initialize(vsyncEnabled, hwnd, fullScreen, screenDepth, screenNear, screenWidth, screenHeight);
+	result = m_Direct3D->Initialize(vsyncEnabled, hwnd, fullScreen, screenDepth, screenNear);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize Direct3D.", L"Error", MB_OK);

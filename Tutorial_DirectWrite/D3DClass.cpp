@@ -29,7 +29,7 @@ D3DClass::~D3DClass()
 }
 
 
-bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDepth, float screenNear, float screenWidth, float screenHeight)
+bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDepth, float screenNear)
 {
 	HRESULT result;
 	IDXGIFactory* factory;
@@ -59,6 +59,15 @@ bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDe
 	//새로고침 빈도
 	numerator = 60;		//분자
 	denominator = 1;	//분모
+
+
+	//윈도우 창 크기를 구함
+	RECT rect;
+	FLOAT screenWidth, screenHeight;
+
+	GetClientRect(hwnd, &rect);
+	screenWidth = (float)rect.right - (float)rect.left;
+	screenHeight = (float)rect.bottom - (float)rect.top;
 
 	//그래픽 인터페이스 팩토리 생성
 	result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
@@ -152,8 +161,8 @@ bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDe
 
 	//스왑 체인 설정
 	swapChainDesc.BufferCount = 1;						//백 버퍼 갯수
-	swapChainDesc.BufferDesc.Width = screenWidth;		//백 버퍼 너비
-	swapChainDesc.BufferDesc.Height = screenHeight;		//백 버퍼 높이
+	swapChainDesc.BufferDesc.Width = (unsigned int)screenWidth;		//백 버퍼 너비
+	swapChainDesc.BufferDesc.Height = (unsigned int)screenHeight;		//백 버퍼 높이
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	//백 버퍼 형식
 
 	//새로고침 빈도 설정
@@ -220,8 +229,8 @@ bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDe
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 
 	//깊이 버퍼 설정
-	depthBufferDesc.Width = screenWidth;	//너비
-	depthBufferDesc.Height = screenHeight;	//높이
+	depthBufferDesc.Width = (unsigned int)screenWidth;	//너비
+	depthBufferDesc.Height = (unsigned int)screenHeight;	//높이
 	depthBufferDesc.MipLevels = 1;
 	depthBufferDesc.ArraySize = 1;
 	depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -343,8 +352,8 @@ bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDe
 	}
 
 	//DirectX가 클립 공간 좌표를 렌더링 대상 공간에 매핑할 수 있도록 뷰포트를 설정함
-	viewport.Width = (float)screenWidth;
-	viewport.Height = (float)screenHeight;
+	viewport.Width = screenWidth;
+	viewport.Height = screenHeight;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;
@@ -355,7 +364,7 @@ bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDe
 
 	//Projection 행렬 설정
 	fieldOfView = 3.141592654f / 4.0f;
-	screenAspect = (float)screenWidth / (float)screenHeight;
+	screenAspect = screenWidth / screenHeight;
 
 	//렌더링 하기 위한 Perspective Projection 행렬 생성
 	m_projectionMatrix = XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screenNear, screenDepth);
@@ -364,7 +373,7 @@ bool D3DClass::Initialize(bool vsync, HWND hwnd, bool fullscreen, float screenDe
 	m_worldMatrix = XMMatrixIdentity();
 
 	//2D 렌더링을 위해 원근감을 없앤 Orthographic Projection 행렬 생성
-	m_orthoMatrix = XMMatrixOrthographicLH((float)screenWidth, (float)screenHeight, screenNear, screenDepth);
+	m_orthoMatrix = XMMatrixOrthographicLH(screenWidth, screenHeight, screenNear, screenDepth);
 
 	//2D 렌더링을 위한 깊이 스텐실 설정
 	depthDisabledStencilDesc.DepthEnable = false;

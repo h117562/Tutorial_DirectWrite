@@ -20,7 +20,7 @@ public:
 	D3DClass(const D3DClass&);
 	~D3DClass();
 
-	bool Initialize(bool, HWND, bool, float screenDepth, float screenNear, float screenWidth, float screenHeight);
+	bool Initialize(bool, HWND, bool, float screenDepth, float screenNear);
 	void Shutdown();
 
 	void BeginScene(float, float, float, float);
