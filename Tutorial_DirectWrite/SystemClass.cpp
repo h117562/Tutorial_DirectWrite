@@ -32,7 +32,7 @@ bool SystemClass::Initialize()
 	m_hinstance = GetModuleHandle(NULL);
 
 	//윈도우 이름
-	m_applicationName = L"Tutorial4";
+	m_applicationName = L"DWrite Tutorial";
 
 	//윈도우 클래스 설정
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;

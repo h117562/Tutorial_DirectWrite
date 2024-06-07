@@ -141,8 +141,9 @@ void ApplicationClass::Shutdown()
 
 bool ApplicationClass::Frame()
 {
-	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
 	bool result;
+	XMFLOAT3 position, rotation;
+	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
 
 	m_CameraClass->Render();
 	m_Direct3D->GetWorldMatrix(worldMatrix);
@@ -152,7 +153,7 @@ bool ApplicationClass::Frame()
 
 	//백 버퍼 초기화
 	m_Direct3D->BeginScene(0.0f, 0.0f, 0.2f, 1.0f);
-
+	m_TextClass->BeginDraw();
 	m_ModelClass->Render(m_Direct3D->GetDeviceContext());
 	result = m_ColorShader->Render(m_Direct3D->GetDeviceContext(), m_ModelClass->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 	if (!result)
@@ -160,8 +161,9 @@ bool ApplicationClass::Frame()
 		return false;
 	}
 
-	m_InfoUi->Frame(m_TextClass);
+	m_InfoUi->Frame(m_TextClass, m_CameraClass->GetPosition(), m_CameraClass->GetRotation());
 
+	m_TextClass->EndDraw();
 	m_Direct3D->EndScene();
 
 	return true;
